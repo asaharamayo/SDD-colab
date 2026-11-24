@@ -1,0 +1,15 @@
+services:
+  workspace:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    environment:
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+    volumes:
+      # Persist local-mode artefacts when STORAGE_MODE=local
+      - usw-data:/app/.data
+
+volumes:
+  usw-data:
