@@ -1,21 +1,20 @@
 /**
  * Demo-only Figma frames. For the walkthrough recording — no real Figma API call.
- * Paste any figma.com design/frame URL; known Open Doors frames get real names.
+ * Paste any figma.com design/frame URL; known Bench frames get demo names.
  */
 
 import type { FigmaFrame } from "./types";
 
 export const DEMO_FIGMA_FRAME =
-  "https://www.figma.com/design/K8mN2pQxRwYzAbCdEfGh/Open-Doors?node-id=42-1180&t=demo-node-1";
+  "https://www.figma.com/design/AbCdEfGhIjKlMnOpQrSt/Bench?node-id=42-1180&t=demo-node-1";
 
-export const DEMO_FIGMA_FRAME_NAME = "Opportunity detail — desktop";
+export const DEMO_FIGMA_FRAME_NAME = "Session detail — desktop";
 
 /** Second walkthrough frame — prefill after the first is linked. */
 export const DEMO_FIGMA_FRAME_2 =
-  "https://www.figma.com/design/K8mN2pQxRwYzAbCdEfGh/Open-Doors?node-id=12-440&t=demo-node-2";
+  "https://www.figma.com/design/AbCdEfGhIjKlMnOpQrSt/Bench?node-id=12-440&t=demo-node-2";
 
-export const DEMO_FIGMA_FRAME_2_NAME = "Search feed — desktop";
-
+export const DEMO_FIGMA_FRAME_2_NAME = "Session list — desktop";
 const KNOWN: Record<string, string> = {
   "42-1180": DEMO_FIGMA_FRAME_NAME,
   "42:1180": DEMO_FIGMA_FRAME_NAME,
@@ -70,10 +69,9 @@ export function figmaSimScript(frame: FigmaFrame, alreadyUploaded: number): Figm
       activity: "Flagging decisions the brief still owes…",
       delayMs: 1600,
       chunk:
-        frame.name.includes("Search")
-          ? `From **${frame.name}**:\n\n1. **[Product]** Filter chips for topic / location / time — not in the prose scope yet.\n2. **[Quality]** Skeleton loaders while the feed fetches — no acceptance for perceived performance.\n\nLinked frames are listed under **Design** on this brief.\n`
-          : `From **${frame.name}**:\n\n1. **[Product]** Empty state when search returns zero — illustration + “Post one yourself”. Keep?\n2. **[Product]** “Saved opportunities” on the detail screen — in the frame, not yet in scope.\n3. **[Engineering]** Interest toast with a 5s undo — needs a soft-cancel.\n4. **[Quality]** Owner panel → bottom sheet on mobile; closing-date turns red under 48h.\n\nLinked frames are listed under **Design** on this brief. Settle the Product ones before Specify.\n`,
-    },
+        frame.name.includes("list") || frame.name.includes("List")
+          ? `From **${frame.name}**:\n\n1. **[Product]** Filter chips for topic / skill / time — not in the prose scope yet.\n2. **[Quality]** Skeleton loaders while the list fetches — no acceptance for perceived performance.\n\nLinked frames are listed under **Design** on this brief.\n`
+          : `From **${frame.name}**:\n\n1. **[Product]** Empty state when search returns zero — illustration + “Host a session”. Keep?\n2. **[Product]** “Saved sessions” on the detail screen — in the frame, not yet in scope.\n3. **[Engineering]** Claim toast with a 5s undo — needs a soft-cancel.\n4. **[Quality]** Host panel → bottom sheet on mobile; start time turns red under 48h.\n\nLinked frames are listed under **Design** on this brief. Settle the Product ones before Specify.\n`,    },
   ];
 }
 
@@ -99,20 +97,20 @@ export function figmaBriefSection(frames: FigmaFrame[]): string {
     lines.push("", "### Captured from uploaded frames", "");
     for (const f of uploaded) {
       lines.push(`#### ${f.name}`, "", `Source: [${f.name}](${f.url})`, "");
-      if (f.name.includes("Search")) {
+      if (f.name.includes("list") || f.name.includes("List")) {
         lines.push(
-          "- Opportunity feed with topic / location / time chips.",
-          "- Card: title, owner, commitment, closing date.",
+          "- Session list with topic / skill / time chips.",
+          "- Card: title, host, duration, seats left.",
           "- Skeleton state while loading.",
           "",
         );
       } else {
         lines.push(
-          "- Opportunity detail: owner, eligibility, one-click interest with a short note.",
-          "- Empty search: illustration and “Post one yourself”.",
-          "- Saved opportunities entry on the detail screen.",
-          "- Interest confirmation with undo for 5 seconds.",
-          "- Mobile: owner panel → bottom sheet; closing date turns red under 48 hours.",
+          "- Session detail: host, skill level, one-tap claim or join waitlist.",
+          "- Empty search: illustration and “Host a session”.",
+          "- Saved sessions entry on the detail screen.",
+          "- Claim confirmation with undo for 5 seconds.",
+          "- Mobile: host panel → bottom sheet; start time turns red under 48 hours.",
           "",
         );
       }
@@ -120,7 +118,7 @@ export function figmaBriefSection(frames: FigmaFrame[]): string {
     lines.push(
       "Open from the frames:",
       "",
-      "- **[Product]** Empty-state CTA and Saved opportunities — in or out for the pilot?",
+      "- **[Product]** Empty-state CTA and Saved sessions — in or out for the pilot?",
       "- **[Engineering]** Undo implies a soft-cancel, not an immediate write.",
       "- **[Quality]** Acceptance must cover mobile bottom sheet and the 48-hour countdown.",
     );
