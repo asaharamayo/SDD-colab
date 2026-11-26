@@ -21,8 +21,7 @@ flowchart LR
 
 <img width="1920" height="1080" alt="Setup" src="https://github.com/user-attachments/assets/fd1a986d-8772-40d6-8785-2cdc12fdd23a" />
 
-
-
+![SDD-colab](Runthrough.gif)
 
 
 1. **One person hosts.** They run the app (`npm run host` / Docker) and sign in with their own GitHub account at `/login`. Their token is cached for the life of the process — it's what actually pushes every commit, including guests'.
